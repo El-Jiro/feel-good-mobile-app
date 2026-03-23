@@ -1,0 +1,37 @@
+#:kivy 2.0 
+#^ Esto no hace nada realmente, nomás es para que la extensión de Kivy no me marque error de sintaxis
+
+#Creamos la primera pantalla y le ponemos el nombre "LoginScreen", deberá ir entre paréntesis angulares (<>)
+#y llevar dos puntos (:) despúes del paréntesis de cierre
+<LoginScreen>:
+    #Antes de empezar a poner los widgets, definimos un Layout, que es como un contenedor invisible dentro del cual se acomodarán
+    #todos los demás elementos, este ya no lleva los paréntesis, sólo los dos puntos
+    GridLayout:
+        cols:1 #Especificamos la cantidad de columnas con el atributo cols
+        #Añadimos dos GridLayout extras para dividir los elementos de la interfaz gráfica en dos grupos, en este primero
+        #colocaremos el formulario de incio de sesión
+        GridLayout:
+            cols:1
+            Label:
+                text: "User Login"
+            TextInput:
+                #Para el texto fantasma que aparece dentro de los campos de texto usamos el atributo "hint_text"
+                hint_text: "Username"
+            TextInput:
+                hint_text: "User password"
+            Button:
+                text: "Login"
+        GridLayout:
+            #Añadimos dos botones: Uno para reestablecer la contraseña y otro para crear un cuenta si el usuario aún no está registrado
+            cols: 2
+            Button:
+                text:"Forgot password?"
+            Button:
+                text:"Sign Up"
+
+#Añadimos otra regla llamada RootWidget, la cual se encargará de administrar todas las pantallas de la app
+<RootWidget>:
+    #Añadimos la pantalla que creamos arriba como un subelemento de root_widget:
+    LoginScreen:
+        #le damos un nombre para poder acceder a ella y manipularla desde el código Python
+        name:"login_screen"
