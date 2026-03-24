@@ -16,7 +16,9 @@ class LoginScreen(Screen):
 #Debemos repetir el procedimiento con cada pantalla de nuestra app, de lo contrario el parser de Kivy no
 #reconocerá la clase y obtendremos un error en tiempo de ejecución
 class SignUpScreen(Screen):
-    pass
+    
+    def login(self: Self):
+        self.manager.current = "login_screen"
 
 #Creamos otra con el nombre RootWidget que herede de ScreenManager
 class RootWidget(ScreenManager):
