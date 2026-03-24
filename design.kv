@@ -35,14 +35,20 @@
 <SignUpScreen>:
     GridLayout:
         cols: 1
-        Label:
-            text: "Sign Up for a space journey!"
-        TextInput:
-            hint_text: "New username"
-        TextInput:
-            hint_text: "New Password"
-        Button:
-            text: "Submit"
+        GridLayout:
+            cols:1
+            Label:
+                text: "Sign Up for a space journey!"
+            TextInput:
+                hint_text: "New username"
+            TextInput:
+                hint_text: "New Password"
+        GridLayout:
+            cols: 2
+            Button:
+                text: "Submit"
+            Button:
+                text: "Return"
 
 #Añadimos otra regla llamada RootWidget, la cual se encargará de administrar todas las pantallas de la app
 <RootWidget>:
