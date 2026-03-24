@@ -10,7 +10,13 @@ Builder.load_file("design.kv")
 class LoginScreen(Screen):
     
     def sign_up(self: Self):
-        print("Sign up button pressed")
+        #llamamos self.manager.current y le asignamos el nombre de la pantalla a la que queramos navegar
+        self.manager.current = "sign_up_screen"
+
+#Debemos repetir el procedimiento con cada pantalla de nuestra app, de lo contrario el parser de Kivy no
+#reconocerá la clase y obtendremos un error en tiempo de ejecución
+class SignUpScreen(Screen):
+    pass
 
 #Creamos otra con el nombre RootWidget que herede de ScreenManager
 class RootWidget(ScreenManager):
@@ -24,6 +30,5 @@ class MainApp(App):
 
 #Si estamos ejecutando el código desde este mismo archivo y no como import en otro script, creamos una instancia anónima de MainApp
 #y llamamos a su método run
-
 if __name__ == "__main__":
     MainApp().run()
