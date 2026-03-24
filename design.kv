@@ -32,9 +32,24 @@
                 #nuestro widget padre en el script de python, en este caso LoginScreen
                 on_press: root.sign_up()
 
+<SignUpScreen>:
+    GridLayout:
+        cols: 1
+        Label:
+            text: "Sign Up for a space journey!"
+        TextInput:
+            hint_text: "New username"
+        TextInput:
+            hint_text: "New Password"
+        Button:
+            text: "Submit"
+
 #Añadimos otra regla llamada RootWidget, la cual se encargará de administrar todas las pantallas de la app
 <RootWidget>:
     #Añadimos la pantalla que creamos arriba como un subelemento de root_widget:
     LoginScreen:
         #le damos un nombre para poder acceder a ella y manipularla desde el código Python
-        name:"login_screen"
+        name: "login_screen"
+    #Añadimos la pantalla de registro de la misma forma
+    SignUpScreen:
+        name: "sign_up_screen"
