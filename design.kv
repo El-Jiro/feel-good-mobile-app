@@ -50,6 +50,10 @@
             cols: 2
             Button:
                 text: "Submit"
+                #Utilizamos root.ids para acceder a nuestros widgets por medio de su id y los pasamos como argumentos de nuestro
+                #método add_user. Deberemos poner .text después del id, de lo contrario imprimirá los objetos como tal en vez del
+                #texto que contienen
+                on_press: root.add_user(root.ids.user.text, root.ids.pswd.text)
             Button:
                 text: "Return"
                 on_press: root.login()
