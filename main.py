@@ -84,6 +84,15 @@ class SignUpScreen(Screen):
             popup.open()
 
             self.login()
+
+class MainScreen(Screen):
+    
+    def logout(self: Self):
+        #Usamos self.transtion.direction para añadir una animación de transición, en este caso un desplazamiento
+        #hacia la derecha
+        self.transition.direction = "right"
+        self.manager.current = "login_screen"
+
 #Creamos otra con el nombre RootWidget que herede de ScreenManager
 class RootWidget(ScreenManager):
     pass
