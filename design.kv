@@ -58,6 +58,24 @@
                 text: "Return"
                 on_press: root.login()
 
+<MainScreen>:
+    GridLayout:
+        cols: 1
+        Button:
+            text: "Logout"
+            on_press: root.logout()
+        Label:
+            text: "How do you feel?"
+        TextInput:
+            id: feeling
+            hint_text: "Things to try: happy, sad, unloved and so on"
+        Button:
+            text: "Enlighten Me"
+        #Mostraremos una cita correspondiente al estado de ánimo del usuario en el label de abajo al presionar el botón
+        Label:
+            id: quote
+            text: ""
+
 #Añadimos otra regla llamada RootWidget, la cual se encargará de administrar todas las pantallas de la app
 <RootWidget>:
     #Añadimos la pantalla que creamos arriba como un subelemento de root_widget:
@@ -67,3 +85,5 @@
     #Añadimos la pantalla de registro de la misma forma
     SignUpScreen:
         name: "sign_up_screen"
+    MainScreen:
+        name: "main_screen"
