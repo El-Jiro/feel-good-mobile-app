@@ -15,12 +15,16 @@
             Label:
                 text: "User Login"
             TextInput:
+                id: user
                 #Para el texto fantasma que aparece dentro de los campos de texto usamos el atributo "hint_text"
                 hint_text: "Username"
             TextInput:
+                id: pswd
                 hint_text: "User password"
             Button:
                 text: "Login"
+                #También podemos usar directamente los ids sin tener que acceder primero a root.ids 
+                on_press: root.login(user.text, pswd.text)
         GridLayout:
             #Añadimos dos botones: Uno para reestablecer la contraseña y otro para crear un cuenta si el usuario aún no está registrado
             cols: 2

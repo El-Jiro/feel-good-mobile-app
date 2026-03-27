@@ -17,9 +17,62 @@ Builder.load_file("design.kv")
 #Creamos una clase vacía con el mismo nombre de nuestra pantalla, esta clase debe heredar de Screen:
 class LoginScreen(Screen):
     
-    def sign_up(self: Self):
+    def sign_up(self: Self) -> None:
         #llamamos self.manager.current y le asignamos el nombre de la pantalla a la que queramos navegar
         self.manager.current = "sign_up_screen"
+    
+    #Creamos el método login para procesar las credenciales del usuario
+    def login(self: Self, username: str, password: str) -> None:
+        #Leemos el archivo y cargamos sus datos en users 
+        with open("users.json") as file:
+            users: dict[str, dict] = json.load(file)
+
+        if username == "" or password == "":
+
+            popup = Popup(
+                title = "Empty credentials",
+                content = Label(text="You must provide an username and password"),
+                size_hint=(None, None),
+                size=(400, 200)
+            )
+
+            popup.open()
+
+        elif not username in users:
+            popup = Popup(
+                title='Invalid username',
+                content=Label(text='Username is wrong or non-existent'),
+                size_hint=(None, None),
+                size=(400, 200)
+                )
+            
+            popup.open()
+        
+        elif not users.get(username, {}).get("password", {}) == password:
+
+            popup = Popup(
+                title='Invalid password',
+                content= Label(text="Password doesn't match"),
+                size_hint=(None, None),
+                size=(300, 200)
+                )
+            
+            popup.open()
+        
+        else:
+
+            popup = Popup(
+                title='Success!',
+                content= Label(text="You've succesfully logged in!"),
+                size_hint=(None, None),
+                size=(300, 200)
+                )
+            
+            popup.open()
+
+            self.manager.transition.direction = "left"
+            self.manager.current = "main_screen"
+
 
 #Debemos repetir el procedimiento con cada pantalla de nuestra app, de lo contrario el parser de Kivy no
 #reconocerá la clase y obtendremos un error en tiempo de ejecución
@@ -86,11 +139,11 @@ class SignUpScreen(Screen):
             self.login()
 
 class MainScreen(Screen):
-    
+
     def logout(self: Self):
         #Usamos self.transtion.direction para añadir una animación de transición, en este caso un desplazamiento
         #hacia la derecha
-        self.transition.direction = "right"
+        self.manager.transition.direction = "right"
         self.manager.current = "login_screen"
 
 #Creamos otra con el nombre RootWidget que herede de ScreenManager
