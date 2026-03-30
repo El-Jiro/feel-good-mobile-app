@@ -3,6 +3,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
+from kivy.properties import StringProperty
 from typing import Self
 from datetime import datetime
 import json
@@ -69,6 +70,9 @@ class LoginScreen(Screen):
                 )
             
             popup.open()
+
+            main = self.manager.get_screen("main_screen")
+            main.user = username
 
             self.manager.transition.direction = "left"
             self.manager.current = "main_screen"
@@ -139,6 +143,8 @@ class SignUpScreen(Screen):
             self.login()
 
 class MainScreen(Screen):
+
+    user: StringProperty = StringProperty("")
 
     def logout(self: Self):
         #Usamos self.transtion.direction para añadir una animación de transición, en este caso un desplazamiento
