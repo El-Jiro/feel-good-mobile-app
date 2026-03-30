@@ -36,7 +36,7 @@ class LoginScreen(Screen):
         
         elif not users.get(username, {}).get("password", {}) == password:
             self.ids.wrong_login.text = "Invalid password"
-            
+
         else:
             popup = Popup(
                 title='Success!',
@@ -69,36 +69,18 @@ class SignUpScreen(Screen):
             #diccionarios pequeños
             users = json.load(file)
 
-        if len(username) < 3:
-            popup = Popup(
-                title='Invalid username',
-                content=Label(text='Username must be at least 3 characters long'),
-                size_hint=(None, None),
-                size=(400, 200)
-                )
-            
-            popup.open()
+        if username == "" or password == "":
+            self.ids.wrong_signup.text = "You must provide an username and password"
+
+        elif len(username) < 3:
+            self.ids.wrong_signup.text = "Username must be at least 3 characters long"
 
         elif not re.match(pattern, password) :
+            self.ids.wrong_signup.text = "Password must be at least 8 characters \nlong and must also contain a number"
 
-            popup = Popup(
-                title='Invalid password',
-                content=Label(text='Password must be at least 8 characters long \nand must also contain a number'),
-                size_hint=(None, None),
-                size=(500, 200)
-                )
-            
-            popup.open()
         elif username in users:
-            popup = Popup(
-                title='Invalid username',
-                content=Label(text='User already exists'),
-                size_hint=(None, None),
-                size=(300, 200)
-                )
-
-            popup.open()
-
+            self.ids.wrong_signup.text = "User already exists"
+        
         else:
             #Creamos un nuevo par clave-valor dentro de users, la clave será el nombre de usuario y el valor será
             #otro diccionario que contendrá la contraseña y un timestamp con la fecha y hora en la cual se creó el usuario
