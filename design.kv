@@ -25,6 +25,10 @@
                 text: "Login"
                 #También podemos usar directamente los ids sin tener que acceder primero a root.ids 
                 on_press: root.login(user.text, pswd.text)
+            Label:
+                id: wrong_login
+                text: ""
+                color: "red"
         GridLayout:
             #Añadimos dos botones: Uno para reestablecer la contraseña y otro para crear un cuenta si el usuario aún no está registrado
             cols: 2

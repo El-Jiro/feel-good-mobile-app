@@ -29,39 +29,15 @@ class LoginScreen(Screen):
             users: dict[str, dict] = json.load(file)
 
         if username == "" or password == "":
-
-            popup = Popup(
-                title = "Empty credentials",
-                content = Label(text="You must provide an username and password"),
-                size_hint=(None, None),
-                size=(400, 200)
-            )
-
-            popup.open()
+            self.ids.wrong_login.text = "You must provide an username and password"
 
         elif not username in users:
-            popup = Popup(
-                title='Invalid username',
-                content=Label(text='Username is wrong or non-existent'),
-                size_hint=(None, None),
-                size=(400, 200)
-                )
-            
-            popup.open()
+            self.ids.wrong_login.text = "Username is invalid or non-existent"
         
         elif not users.get(username, {}).get("password", {}) == password:
-
-            popup = Popup(
-                title='Invalid password',
-                content= Label(text="Password doesn't match"),
-                size_hint=(None, None),
-                size=(300, 200)
-                )
+            self.ids.wrong_login.text = "Invalid password"
             
-            popup.open()
-        
         else:
-
             popup = Popup(
                 title='Success!',
                 content= Label(text="You've succesfully logged in!"),
