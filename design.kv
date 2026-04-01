@@ -21,14 +21,26 @@
             TextInput:
                 id: pswd
                 hint_text: "User password"
+        GridLayout:
+            cols: 2
             Button:
                 text: "Login"
                 #También podemos usar directamente los ids sin tener que acceder primero a root.ids 
                 on_press: root.login(user.text, pswd.text)
-            Label:
-                id: wrong_login
-                text: ""
-                color: "red"
+            BoxLayout:
+                orientation: "horizontal"
+                CheckBox:
+                    id: keep_sesion
+                    width: 10
+                Label:
+                    text: "Remember me"
+                    halign: "left"
+                    valign: "center"
+                    text_size: self.size
+        Label:
+            id: wrong_login
+            text: ""
+            color: "red"
         GridLayout:
             #Añadimos dos botones: Uno para reestablecer la contraseña y otro para crear un cuenta si el usuario aún no está registrado
             cols: 2
