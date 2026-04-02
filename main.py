@@ -9,7 +9,6 @@ from typing import Self
 from datetime import datetime
 import json
 import re
-import os
 
 #Patrón para evaluar la contraseña:
 pattern = r"^(?=.*\d).{8,}$"
@@ -31,18 +30,18 @@ class LoginScreen(Screen):
             users: dict[str, dict] = json.load(file)
 
         if username == "" or password == "":
-            self.ids.wrong_login.text = "You must provide an username and password"
+            self.ids.wrong_login.text = "Debes proporcionar un usuario y una contraseña"
 
         elif not username in users:
-            self.ids.wrong_login.text = "Username is invalid or non-existent"
+            self.ids.wrong_login.text = "El usuario es inválido o no existe"
         
         elif not users.get(username, {}).get("password", {}) == password:
-            self.ids.wrong_login.text = "Invalid password"
+            self.ids.wrong_login.text = "Contraseña inválida"
 
         else:
             popup = Popup(
-                title='Success!',
-                content= Label(text="You've succesfully logged in!"),
+                title='¡Éxito!',
+                content= Label(text="¡Se ha inciado sesión con éxito!"),
                 size_hint=(None, None),
                 size=(300, 200)
                 )
@@ -57,10 +56,11 @@ class LoginScreen(Screen):
             print(username)
             main.user = username
 
+            #Creamos una instancia de app
+            app = App.get_running_app()
+
             if remember:
-                global store 
-                store = JsonStore("session.json")
-                store.put("user", name= username)
+                app.store.put("user", name= username)
 
             self.manager.transition.direction = "left"
             self.manager.current = "main_screen"
@@ -69,6 +69,8 @@ class LoginScreen(Screen):
 #Debemos repetir el procedimiento con cada pantalla de nuestra app, de lo contrario el parser de Kivy no
 #reconocerá la clase y obtendremos un error en tiempo de ejecución
 class SignUpScreen(Screen):
+
+    
     
     def login(self: Self):
         self.manager.current = "login_screen"
@@ -82,16 +84,16 @@ class SignUpScreen(Screen):
             users = json.load(file)
 
         if username == "" or password == "":
-            self.ids.wrong_signup.text = "You must provide an username and password"
+            self.ids.wrong_signup.text = "Debes proporcionar un usuario y una contraseña"
 
         elif len(username) < 3:
-            self.ids.wrong_signup.text = "Username must be at least 3 characters long"
+            self.ids.wrong_signup.text = "El usuario debe tener al menos 3 caracteres de longitud"
 
         elif not re.match(pattern, password) :
-            self.ids.wrong_signup.text = "Password must be at least 8 characters \nlong and must also contain a number"
+            self.ids.wrong_signup.text = "La contraseña debe tener al menos 3 caracteres \nde longitud y también debe incluir un número"
 
         elif username in users:
-            self.ids.wrong_signup.text = "User already exists"
+            self.ids.wrong_signup.text = "El usuario ya existe"
         
         else:
             #Creamos un nuevo par clave-valor dentro de users, la clave será el nombre de usuario y el valor será
@@ -102,10 +104,10 @@ class SignUpScreen(Screen):
                 json.dump(users, file)
             
             popup = Popup(
-                title='Success!',
-                content=Label(text='New user succesfully registered!'),
+                title='¡Éxito!',
+                content=Label(text='¡Se ha registrado exitosamente el usuario!'),
                 size_hint=(None, None),
-                size=(300, 200)
+                size=(400, 200)
                 )
             
             popup.open()
@@ -118,8 +120,10 @@ class MainScreen(Screen):
 
     def logout(self: Self):
 
-        if store.exists("user"):
-            store.delete("user")
+        app = App.get_running_app()
+
+        if app.store.exists("user"):
+            app.store.delete("user")
         #Usamos self.transtion.direction para añadir una animación de transición, en este caso un desplazamiento
         #hacia la derecha
         self.manager.transition.direction = "right"
@@ -135,8 +139,10 @@ class MainApp(App):
     def build(self: Self):
         self.sm = RootWidget()
 
-        if store.exists("user"):
-            username = store.get("user")["name"]
+        self.store = JsonStore("session.json")
+
+        if self.store.exists("user"):
+            username = self.store.get("user")["name"]
             main = self.sm.get_screen("main_screen")
             main.user = username
             self.sm.current= "main_screen"

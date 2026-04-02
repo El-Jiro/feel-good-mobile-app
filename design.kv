@@ -13,18 +13,18 @@
         GridLayout:
             cols:1
             Label:
-                text: "User Login"
+                text: "Inicio de Sesión"
             TextInput:
                 id: user
                 #Para el texto fantasma que aparece dentro de los campos de texto usamos el atributo "hint_text"
-                hint_text: "Username"
+                hint_text: "Nombre de usuario"
             TextInput:
                 id: pswd
-                hint_text: "User password"
+                hint_text: "Contraseña"
         GridLayout:
             cols: 2
             Button:
-                text: "Login"
+                text: "Acceder"
                 #También podemos usar directamente los ids sin tener que acceder primero a root.ids 
                 on_press: root.login(user.text, pswd.text)
             BoxLayout:
@@ -33,7 +33,7 @@
                     id: keep_session
                     width: 10
                 Label:
-                    text: "Remember me"
+                    text: "Recordarme"
                     halign: "left"
                     valign: "center"
                     text_size: self.size
@@ -45,9 +45,9 @@
             #Añadimos dos botones: Uno para reestablecer la contraseña y otro para crear un cuenta si el usuario aún no está registrado
             cols: 2
             Button:
-                text:"Forgot password?"
+                text:"¿Olvidaste la contraseña?"
             Button:
-                text:"Sign Up"
+                text:"Registrarse"
                 #Usamos el atributo on_press para llamar a una función cuando sea presionado, el atributo root se refiere a la clase que representa
                 #nuestro widget padre en el script de python, en este caso LoginScreen
                 on_press: root.sign_up()
@@ -58,14 +58,14 @@
         GridLayout:
             cols:1
             Label:
-                text: "Sign Up for a space journey!"
+                text: "¡Registráte para un viaje espacial!"
             TextInput:
                 #le añadimos un id a los TextInput para poder manipularlos en tiempo de ejecución, dicho id no debe ir entre comillas
                 id: user
-                hint_text: "New username"
+                hint_text: "Nuevo nombre de usuario"
             TextInput:
                 id: pswd
-                hint_text: "New Password"
+                hint_text: "Nueva contraseña"
             Label:
                 id: wrong_signup
                 text: ""
@@ -73,28 +73,28 @@
         GridLayout:
             cols: 2
             Button:
-                text: "Submit"
+                text: "Enviar"
                 #Utilizamos root.ids para acceder a nuestros widgets por medio de su id y los pasamos como argumentos de nuestro
                 #método add_user. Deberemos poner .text después del id, de lo contrario imprimirá los objetos como tal en vez del
                 #texto que contienen
                 on_press: root.add_user(root.ids.user.text, root.ids.pswd.text)
             Button:
-                text: "Return"
+                text: "Regresar"
                 on_press: root.login()
 
 <MainScreen>:
     GridLayout:
         cols: 1
         Button:
-            text: "Logout"
+            text: "Cerrar sesión"
             on_press: root.logout()
         Label:
-            text: "How do you feel today, " + root.user + "?"
+            text: "¿Cómo te sientes hoy, " + root.user + "?"
         TextInput:
             id: feeling
-            hint_text: "Things to try: happy, sad, unloved and so on"
+            hint_text: "Intenta con: feliz, triste, no amado, etc."
         Button:
-            text: "Enlighten Me"
+            text: "Ilumíname"
         #Mostraremos una cita correspondiente al estado de ánimo del usuario en el label de abajo al presionar el botón
         Label:
             id: quote
