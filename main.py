@@ -4,10 +4,12 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.properties import StringProperty
+from kivy.storage.jsonstore import JsonStore
 from typing import Self
 from datetime import datetime
 import json
 import re
+import os
 
 #Patrón para evaluar la contraseña:
 pattern = r"^(?=.*\d).{8,}$"
@@ -47,8 +49,18 @@ class LoginScreen(Screen):
             
             popup.open()
 
+            
+            username = self.ids.user.text
+            remember = self.ids.keep_session.active
+
             main = self.manager.get_screen("main_screen")
+            print(username)
             main.user = username
+
+            if remember:
+                global store 
+                store = JsonStore("session.json")
+                store.put("user", name= username)
 
             self.manager.transition.direction = "left"
             self.manager.current = "main_screen"
@@ -105,6 +117,9 @@ class MainScreen(Screen):
     user: StringProperty = StringProperty("")
 
     def logout(self: Self):
+
+        if store.exists("user"):
+            store.delete("user")
         #Usamos self.transtion.direction para añadir una animación de transición, en este caso un desplazamiento
         #hacia la derecha
         self.manager.transition.direction = "right"
@@ -117,8 +132,16 @@ class RootWidget(ScreenManager):
 #Y ahora una última llamada MainApp que herede de App, esta tendrá un único método llamado build que es heredado de su clase padre,
 #recibirá self como parámetro y devolverá una instancia de RootWidget
 class MainApp(App):
-    def build(self):
-        return RootWidget()
+    def build(self: Self):
+        self.sm = RootWidget()
+
+        if store.exists("user"):
+            username = store.get("user")["name"]
+            main = self.sm.get_screen("main_screen")
+            main.user = username
+            self.sm.current= "main_screen"
+
+        return self.sm
 
 #Si estamos ejecutando el código desde este mismo archivo y no como import en otro script, creamos una instancia anónima de MainApp
 #y llamamos a su método run
