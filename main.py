@@ -3,6 +3,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
+from kivy.clock import Clock
 from kivy.properties import StringProperty
 from kivy.storage.jsonstore import JsonStore
 from typing import Self
@@ -19,6 +20,16 @@ Builder.load_file("design.kv")
 #Creamos una clase vacía con el mismo nombre de nuestra pantalla, esta clase debe heredar de Screen:
 class LoginScreen(Screen):
     
+    def on_pre_enter(self, *args):
+        Clock.schedule_once(self._init_ui, 0)
+    
+    def _init_ui(self, dt):
+
+        self.ids.user.text = ""
+        self.ids.pswd.text = ""
+        self.ids.keep_session.active = False
+        self.ids.wrong_login.text = ""
+
     def sign_up(self: Self) -> None:
         #llamamos self.manager.current y le asignamos el nombre de la pantalla a la que queramos navegar
         self.manager.current = "sign_up_screen"
@@ -70,6 +81,15 @@ class LoginScreen(Screen):
 #reconocerá la clase y obtendremos un error en tiempo de ejecución
 class SignUpScreen(Screen):
 
+    def on_pre_enter(self, *args):
+        Clock.schedule_once(self._init_ui, 0)
+    
+    def _init_ui(self, dt):
+
+        self.ids.user.text = ""
+        self.ids.pswd.text = ""
+        self.ids.keep_session.active = False
+        self.ids.wrong_login.text = ""
     
     
     def login(self: Self):
