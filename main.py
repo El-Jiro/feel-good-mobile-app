@@ -81,6 +81,7 @@ class LoginScreen(Screen):
 #reconocerá la clase y obtendremos un error en tiempo de ejecución
 class SignUpScreen(Screen):
 
+     
     def on_pre_enter(self, *args):
         Clock.schedule_once(self._init_ui, 0)
     
