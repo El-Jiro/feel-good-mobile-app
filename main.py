@@ -8,8 +8,8 @@ from kivy.properties import StringProperty
 from kivy.storage.jsonstore import JsonStore
 from typing import Self
 from datetime import datetime
-import json
-import re
+from pathlib import Path
+import json, glob, re, random
 
 #Patrón para evaluar la contraseña:
 pattern = r"^(?=.*\d).{8,}$"
@@ -76,12 +76,10 @@ class LoginScreen(Screen):
             self.manager.transition.direction = "left"
             self.manager.current = "main_screen"
 
-
 #Debemos repetir el procedimiento con cada pantalla de nuestra app, de lo contrario el parser de Kivy no
 #reconocerá la clase y obtendremos un error en tiempo de ejecución
 class SignUpScreen(Screen):
 
-     
     def on_pre_enter(self, *args):
         Clock.schedule_once(self._init_ui, 0)
     
@@ -145,10 +143,32 @@ class MainScreen(Screen):
 
         if app.store.exists("user"):
             app.store.delete("user")
-        #Usamos self.transtion.direction para añadir una animación de transición, en este caso un desplazamiento
-        #hacia la derecha
+        #Usamos self.transtion.direction para añadir una animación de transición, en este caso un 
+        #desplazamiento hacia la derecha
         self.manager.transition.direction = "right"
         self.manager.current = "login_screen"
+
+    #Creamos un método para obtener la emoción introducida por el usuario y mostrar una cita acorde:
+    def get_quote(self: Self, feel: str):
+        #Ponemos todo el input en mínusculas para que no haya problemas al compararlo con los nombres de los archivos
+        feel = feel.lower()
+        #Obtenemos las rutas de todos los archivos que se encuentren dentro de la carpeta quotes
+        avlb_feelings: list[str] = glob.glob("quotes/*")
+        #Ahora obtenemos sólo los nombres de archivo en sí sin todas las carpetas ni la extensión 
+        #mediante Path().stem y la comprensión de listas
+        avlb_feelings = [Path(file).stem for file in avlb_feelings]
+
+        #Si la emoción introducida está en la lista de las emociones disponibles, abrimos su archivo .txt correspondiente:
+        if feel in avlb_feelings:
+            with open(f"quotes/{feel}.txt", encoding="utf8") as file:
+                #obtenemos las citas con readlines()
+                quotes: list[str] = file.readlines()
+                #mostramos una cita de la lista al azar en nuestro label mediante random.choice
+                self.ids.quote.text = random.choice(quotes)
+        else: 
+            #De lo contrario enviamos un mensaje diciendo al usuario que intente con una emoción distinta
+            self.ids.quote.text = "Prueba con otra emoción"
+            self.ids.quote.color = "yellow"
 
 #Creamos otra con el nombre RootWidget que herede de ScreenManager
 class RootWidget(ScreenManager):
@@ -160,10 +180,13 @@ class MainApp(App):
     def build(self: Self):
         self.sm = RootWidget()
 
+        #Creamos un archivo JSON que almacene la sesión mediante JsonStore y lo guardamos en el atributo store de la classe
         self.store = JsonStore("session.json")
 
+        #Si el archivo existe y tiene la clave user, obtenemos el nombre de usuario
         if self.store.exists("user"):
             username = self.store.get("user")["name"]
+            #Hacemos referencia a la pantalla principal y le pasamos dicho nombre
             main = self.sm.get_screen("main_screen")
             main.user = username
             self.sm.current= "main_screen"

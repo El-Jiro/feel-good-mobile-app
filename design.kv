@@ -95,6 +95,7 @@
             hint_text: "Intenta con: feliz, triste, no amado, etc."
         Button:
             text: "Ilumíname"
+            on_press: root.get_quote(feeling.text)
         #Mostraremos una cita correspondiente al estado de ánimo del usuario en el label de abajo al presionar el botón
         Label:
             id: quote
