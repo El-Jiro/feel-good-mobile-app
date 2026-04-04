@@ -174,7 +174,13 @@ class MainScreen(Screen):
             self.ids.quote.color = "yellow"
 
 class ForgotPasswordScreen(Screen):
-    pass
+    
+    def go_to_login(self: Self) -> None:
+
+        self.manager.transition.direction = "right"
+        self.manager.current = "login_screen"
+
+    
 #Creamos otra con el nombre RootWidget que herede de ScreenManager
 class RootWidget(ScreenManager):
     pass
