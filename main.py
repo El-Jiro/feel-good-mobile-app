@@ -32,6 +32,7 @@ class LoginScreen(Screen):
 
     def go_to_sign_up(self: Self) -> None:
         #llamamos self.manager.current y le asignamos el nombre de la pantalla a la que queramos navegar
+        self.manager.transition.direction = "right"
         self.manager.current = "sign_up_screen"
 
     def go_to_forgot_password(self: Self) -> None:
