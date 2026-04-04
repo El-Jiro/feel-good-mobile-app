@@ -30,7 +30,7 @@ class LoginScreen(Screen):
         self.ids.keep_session.active = False
         self.ids.wrong_login.text = ""
 
-    def sign_up(self: Self) -> None:
+    def go_to_sign_up(self: Self) -> None:
         #llamamos self.manager.current y le asignamos el nombre de la pantalla a la que queramos navegar
         self.manager.current = "sign_up_screen"
     
@@ -87,8 +87,7 @@ class SignUpScreen(Screen):
 
         self.ids.user.text = ""
         self.ids.pswd.text = ""
-        self.ids.keep_session.active = False
-        self.ids.wrong_login.text = ""
+        self.ids.wrong_signup.text = ""
     
     
     def login(self: Self):
