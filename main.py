@@ -170,6 +170,8 @@ class MainScreen(Screen):
             self.ids.quote.text = "Prueba con otra emoción"
             self.ids.quote.color = "yellow"
 
+class ForgotPasswordScreen(Screen):
+    pass
 #Creamos otra con el nombre RootWidget que herede de ScreenManager
 class RootWidget(ScreenManager):
     pass

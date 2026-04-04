@@ -101,6 +101,27 @@
             id: quote
             text: ""
 
+<ForgotPasswordScreen>:
+    GridLayout:
+        cols: 1
+        Label:
+            text: "Reestablecer contraseña"
+        TextInput:
+            id: user
+            hint_text: "Nombre de usuario"
+        TextInput:
+            id: pswd
+            hint_text: "Nueva contraseña"
+        Label:
+            id: error_msg
+            text: ""
+        GridLayout:
+            cols:2
+            Button:
+                text: "Reestablecer"
+            Button:
+                text: "Regresar"
+
 #Añadimos otra regla llamada RootWidget, la cual se encargará de administrar todas las pantallas de la app
 <RootWidget>:
     #Añadimos la pantalla que creamos arriba como un subelemento de root_widget:
@@ -112,3 +133,5 @@
         name: "sign_up_screen"
     MainScreen:
         name: "main_screen"
+    ForgotPasswordScreen:
+        name: "forgot_password_screen"
