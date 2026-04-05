@@ -174,6 +174,15 @@ class MainScreen(Screen):
             self.ids.quote.color = "yellow"
 
 class ForgotPasswordScreen(Screen):
+
+    def on_pre_enter(self, *args):
+        Clock.schedule_once(self._init_ui, 0)
+
+    def _init_ui(self: Self, dt: int) -> None:
+
+        self.ids.user.text = ""
+        self.ids.pswd.text = ""
+        self.ids.error_msg.text = ""
     
     def go_to_login(self: Self) -> None:
 
