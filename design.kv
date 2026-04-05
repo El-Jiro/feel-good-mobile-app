@@ -116,10 +116,12 @@
         Label:
             id: error_msg
             text: ""
+            color: "red"
         GridLayout:
             cols:2
             Button:
                 text: "Reestablecer"
+                on_press: root.reset_password(user.text, pswd.text)
             Button:
                 text: "Regresar"
                 on_press: root.go_to_login()

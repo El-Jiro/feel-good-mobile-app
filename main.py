@@ -112,7 +112,7 @@ class SignUpScreen(Screen):
             self.ids.wrong_signup.text = "El usuario debe tener al menos 3 caracteres de longitud"
 
         elif not re.match(pattern, password) :
-            self.ids.wrong_signup.text = "La contraseña debe tener al menos 3 caracteres \nde longitud y también debe incluir un número"
+            self.ids.wrong_signup.text = "La contraseña debe tener al menos 8 caracteres \nde longitud y también debe incluir un número"
 
         elif username in users:
             self.ids.wrong_signup.text = "El usuario ya existe"
@@ -180,7 +180,48 @@ class ForgotPasswordScreen(Screen):
         self.manager.transition.direction = "right"
         self.manager.current = "login_screen"
 
-    
+    def reset_password(self: Self, username: str, password: str) -> None:
+
+        #Cargamos el archivo de users.json y guardamos sus datos en la variable homónima
+        with open("users.json") as file:
+            users: dict[str, dict] = json.load(file)
+        
+        #Comprobamos que ambos campos estén llenos, si están vacíos enviamos un mensaje de error
+        if username == "" or password == "":
+            self.ids.error_msg.text = "Debes proporcionar un nombre de usuario y una contraseña"
+        else:
+            #Comprobamos que el usuario exista
+            if not username in users:
+                self.ids.error_msg.text = "El usuario es inválido o no existe"
+            else:
+                #Cuando hayamos validado el usuario, comprobamos que la nueva contraseña cumpla con el formato requrido y que sea
+                #distinta de la actual
+                if not re.match(pattern, password):
+                    self.ids.error_msg.text = "La contraseña debe tener al menos 8 caracteres \nde longitud y también debe incluir un número"
+                elif users.get(username, {}).get("password",{}) == password:
+                    self.ids.error_msg.text = "La contraseña nueva debe ser distinta de la actual"
+                else:
+                    #actualizamos la contraseña en users
+                    users.get(username, {})["password"] = password
+
+                    #Sobreescribimos el archivo json
+                    with open("users.json", "w") as file:
+                        json.dump(users, file)
+
+                    #Mandamos un popup con un mensaje de éxito
+                    popup = Popup(
+                        title='Contraseña actualizada',
+                        content= Label(text="¡Se ha actualizado la \ncontraseña con éxito!"),
+                        size_hint=(None, None),
+                        size=(400, 200)
+                    )
+                    
+                    popup.open()
+
+                    #Volvemos a la pantalla de login
+                    self.manager.transition.direction= "left"
+                    self.manager.current = "login_screen"
+
 #Creamos otra con el nombre RootWidget que herede de ScreenManager
 class RootWidget(ScreenManager):
     pass
