@@ -12,31 +12,54 @@
         #colocaremos el formulario de incio de sesión
         GridLayout:
             cols:1
+            #Añadimos un padding tanto horizontal como vertical, esto es la distancia entre los bordes del Layout y los de la pantalla
+            padding: 15, 15 
+            #El spacing es parecido, pero se refiere a la distancia entre los bordes de cada widget dentro del layout
+            spacing: 20, 20
             Label:
                 text: "Inicio de Sesión"
+                #Aumentamos el tamaño de la fuente aquí, deberemos añadir sp (space-independent pixels) después del número
+                font_size: "20sp"
+                size_hint_y: None
+                height: "40dp"
             TextInput:
                 id: user
                 #Para el texto fantasma que aparece dentro de los campos de texto usamos el atributo "hint_text"
                 hint_text: "Nombre de usuario"
+                size_hint_y: None
+                height: "60dp"
             TextInput:
                 id: pswd
                 hint_text: "Contraseña"
-        GridLayout:
-            cols: 2
-            Button:
-                text: "Acceder"
-                #También podemos usar directamente los ids sin tener que acceder primero a root.ids 
-                on_press: root.login(user.text, pswd.text)
-            BoxLayout:
-                orientation: "horizontal"
-                CheckBox:
-                    id: keep_session
-                    width: 10
-                Label:
-                    text: "Recordarme"
-                    halign: "left"
-                    valign: "center"
-                    text_size: self.size
+                size_hint_y: None
+                height: "60dp"
+            RelativeLayout:
+                size_hint_y: None
+                height: "80dp"
+                Button:
+                    text: "Acceder"
+                    #También podemos usar directamente los ids sin tener que acceder primero a root.ids 
+                    on_press: root.login(user.text, pswd.text)
+                    size_hint: 0.3, 0.5
+                    #Con pos_hint podemos centrar el widget aplicando valores relativos a x e y
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+            AnchorLayout:
+                anchor_x: "center"
+                anchor_y: "center"
+                BoxLayout:
+                    orientation: "horizontal"
+                    #width: self.minimum_width
+                    size_hint: None, None
+                    size: self.minimum_size
+                    spacing: 5
+                    CheckBox:
+                        id: keep_session
+                        size_hint: None, None
+                        size: "30dp", "18dp"
+                    Label:
+                        text: "Recordarme"
+                        size_hint: None, None
+                        size: self.texture_size
         Label:
             id: wrong_login
             text: ""
@@ -44,14 +67,32 @@
         GridLayout:
             #Añadimos dos botones: Uno para reestablecer la contraseña y otro para crear un cuenta si el usuario aún no está registrado
             cols: 2
+            size_hint_y: None
+            padding: 10, 10
+            spacing: 10, 0
+            height: "110dp"
             Button:
                 text:"¿Olvidaste la contraseña?"
                 on_press: root.go_to_forgot_password()
+                #Ponemos el color de fondo totalmente transparente con un formato RGBA
+                background_color: 1, 1, 1, 0
+                #Si el botón está en su estado normal, es decir en reposo, la opacidad será de 1, pero al cambiar a pressed 
+                #o released será de 0.5
+                opacity: 1 if self.state == "normal" else 0.5
+                #Cambiamos el color del texto por azul:
+                color: 0.1, 0.7, 1, 1
             Button:
                 text:"Registrarse"
-                #Usamos el atributo on_press para llamar a una función cuando sea presionado, el atributo root se refiere a la clase que representa
-                #nuestro widget padre en el script de python, en este caso LoginScreen
+                #Usamos el atributo on_press para llamar a una función cuando sea presionado, el atributo root se refiere a la clase 
+                #que representa nuestro widget padre en el script de python, en este caso LoginScreen
                 on_press: root.go_to_sign_up()
+                #Ponemos el color de fondo totalmente transparente con un formato RGBA
+                background_color: 1, 1, 1, 0
+                #Si el botón está en su estado normal, es decir en reposo, la opacidad será de 1, pero al cambiar a pressed 
+                #o released será de 0.5
+                opacity: 1 if self.state == "normal" else 0.5
+                #Cambiamos el color del texto por azul:
+                color: 0.1, 0.7, 1, 1
 
 <SignUpScreen>:
     GridLayout:
