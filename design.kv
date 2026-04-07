@@ -98,23 +98,48 @@
 <SignUpScreen>:
     GridLayout:
         cols: 1
-        GridLayout:
-            cols:1
-            Label:
-                text: "¡Registráte para un viaje espacial!"
-            TextInput:
-                #le añadimos un id a los TextInput para poder manipularlos en tiempo de ejecución, dicho id no debe ir entre comillas
-                id: user
-                hint_text: "Nuevo nombre de usuario"
-            TextInput:
-                id: pswd
-                hint_text: "Nueva contraseña"
-            Label:
-                id: wrong_signup
-                text: ""
-                color: "red"
+        FloatLayout:    
+            GridLayout:
+                cols:1
+                size_hint: 0.9, None
+                padding: 20, 20
+                spacing: 20, 20
+                pos_hint: {"center_x": 0.5, "center_y": 0.8}
+
+                Label:
+                    text: "¡Regístrate para un viaje espacial!"
+                    font_size: "20sp"
+                    size_hint_y: None
+                    height: "60dp"
+
+                Widget:
+                    size_hint_y: None
+                    height: "35dp"
+
+                TextInput:
+                    #le añadimos un id a los TextInput para poder manipularlos en tiempo de ejecución, dicho id no debe ir entre comillas
+                    id: user
+                    size_hint_y: None
+                    height: "60dp"
+                    hint_text: "Nuevo nombre de usuario"
+                TextInput:
+                    id: pswd
+                    size_hint_y: None
+                    height: "60dp"
+                    hint_text: "Nueva contraseña"
+                    password: True
+                Label:
+                    spacing: 10, 0
+                    size_hint_y: None 
+                    height: "40dp"
+                    id: wrong_signup
+                    text: ""
+                    color: "red"
         GridLayout:
             cols: 2
+            size_hint: 0.2, 0.2
+            padding: 15, 15
+            spacing: 20, 0
             Button:
                 text: "Enviar"
                 #Utilizamos root.ids para acceder a nuestros widgets por medio de su id y los pasamos como argumentos de nuestro
