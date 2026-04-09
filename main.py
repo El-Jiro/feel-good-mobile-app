@@ -197,7 +197,7 @@ class ForgotPasswordScreen(Screen):
         
         #Comprobamos que ambos campos estén llenos, si están vacíos enviamos un mensaje de error
         if username == "" or password == "":
-            self.ids.error_msg.text = "Debes proporcionar un nombre de usuario y una contraseña"
+            self.ids.error_msg.text = "Debes proporcionar un nombre \nde usuario y una contraseña"
         else:
             #Comprobamos que el usuario exista
             if not username in users:

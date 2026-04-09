@@ -172,19 +172,32 @@
 <ForgotPasswordScreen>:
     GridLayout:
         cols: 1
+        padding: 20, 20
+        spacing: 20, 20
         Label:
             text: "Reestablecer contraseña"
+            font_size: "20sp"
         TextInput:
             id: user
             hint_text: "Nombre de usuario"
+            size_hint_y: None
+            height: "60dp"
         TextInput:
             id: pswd
             hint_text: "Nueva contraseña"
+            size_hint_y: None
+            height: "60dp"
         Label:
             id: error_msg
             text: ""
             color: "red"
+            size: self.size
+            halign: "center"
+            valign: "middle"
         GridLayout:
+            spacing: 20, 0
+            padding: 20, 0
+            size_hint: 0.3, 0.4
             cols:2
             Button:
                 text: "Reestablecer"
