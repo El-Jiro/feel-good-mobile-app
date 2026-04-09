@@ -44,6 +44,7 @@
                     size_hint: 0.3, 0.5
                     #Con pos_hint podemos centrar el widget aplicando valores relativos a x e y
                     pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+                    opacity: 1 if self.state == "normal" else 0.5
             AnchorLayout:
                 anchor_x: "center"
                 anchor_y: "center"
@@ -146,9 +147,11 @@
                 #método add_user. Deberemos poner .text después del id, de lo contrario imprimirá los objetos como tal en vez del
                 #texto que contienen
                 on_press: root.add_user(root.ids.user.text, root.ids.pswd.text)
+                opacity: 1 if self.state == "normal" else 0.5
             Button:
                 text: "Regresar"
                 on_press: root.login()
+                opacity: 1 if self.state == "normal" else 0.5
 
 <MainScreen>:
     GridLayout:
@@ -164,6 +167,7 @@
         Button:
             text: "Ilumíname"
             on_press: root.get_quote(feeling.text)
+            opacity: 1 if self.state == "normal" else 0.5
         #Mostraremos una cita correspondiente al estado de ánimo del usuario en el label de abajo al presionar el botón
         Label:
             id: quote
@@ -202,9 +206,11 @@
             Button:
                 text: "Reestablecer"
                 on_press: root.reset_password(user.text, pswd.text)
+                opacity: 1 if self.state == "normal" else 0.5
             Button:
                 text: "Regresar"
                 on_press: root.go_to_login()
+                opacity: 1 if self.state == "normal" else 0.5
 
 #Añadimos otra regla llamada RootWidget, la cual se encargará de administrar todas las pantallas de la app
 <RootWidget>:
