@@ -6,16 +6,19 @@
 <LoginScreen>:
     #Antes de empezar a poner los widgets, definimos un Layout, que es como un contenedor invisible dentro del cual se acomodarán
     #todos los demás elementos, este ya no lleva los paréntesis, sólo los dos puntos
-    GridLayout:
+    FloatLayout:
         cols:1 #Especificamos la cantidad de columnas con el atributo cols
         #Añadimos dos GridLayout extras para dividir los elementos de la interfaz gráfica en dos grupos, en este primero
         #colocaremos el formulario de incio de sesión
         GridLayout:
             cols:1
+            size_hint: 0.9, None
             #Añadimos un padding tanto horizontal como vertical, esto es la distancia entre los bordes del Layout y los de la pantalla
-            padding: 15, 15 
+            padding: 15, 15
             #El spacing es parecido, pero se refiere a la distancia entre los bordes de cada widget dentro del layout
             spacing: 20, 20
+            height: self.minimum_height
+            pos_hint: {"center_x": 0.5, "center_y": 0.6}
             Label:
                 text: "Inicio de Sesión"
                 #Aumentamos el tamaño de la fuente aquí, deberemos añadir sp (space-independent pixels) después del número
@@ -62,10 +65,16 @@
                         text: "Recordarme"
                         size_hint: None, None
                         size: self.texture_size
-        Label:
-            id: wrong_login
-            text: ""
-            color: "red"
+            Widget:
+                size_hint_y: None
+                height: "20dp"
+            Label:
+                id: wrong_login
+                text: ""
+                color: "red"
+                size: self.size
+                halign: "center"
+                valign: "middle"
         GridLayout:
             #Añadimos dos botones: Uno para reestablecer la contraseña y otro para crear un cuenta si el usuario aún no está registrado
             cols: 2
