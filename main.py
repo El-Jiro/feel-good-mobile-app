@@ -9,6 +9,9 @@ from kivy.storage.jsonstore import JsonStore
 from typing import Self
 from datetime import datetime
 from pathlib import Path
+from hoverable import HoverBehavior
+from kivy.uix.image import Image
+from kivy.uix.behaviors import ButtonBehavior
 import json, glob, re, random
 
 #Patrón para evaluar la contraseña:
@@ -238,7 +241,9 @@ class RootWidget(ScreenManager):
 #Y ahora una última llamada MainApp que herede de App, esta tendrá un único método llamado build que es heredado de su clase padre,
 #recibirá self como parámetro y devolverá una instancia de RootWidget
 class MainApp(App):
+
     def build(self: Self):
+
         self.sm = RootWidget()
 
         #Creamos un archivo JSON que almacene la sesión mediante JsonStore y lo guardamos en el atributo store de la classe
@@ -253,6 +258,10 @@ class MainApp(App):
             self.sm.current= "main_screen"
 
         return self.sm
+
+#Creamos una clase especial llamada ImageButton para el botón de Logout, la cual heredará de HoverBehavior, Image y ButtonBehavior 
+class ImageButton(Image, HoverBehavior, ButtonBehavior):
+    pass
 
 #Si estamos ejecutando el código desde este mismo archivo y no como import en otro script, creamos una instancia anónima de MainApp
 #y llamamos a su método run
