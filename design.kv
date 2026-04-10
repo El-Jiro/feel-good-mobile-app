@@ -170,9 +170,10 @@
         padding: 30, 30
         spacing: 30, 30
         cols: 1
-        Button:
-            text: "Cerrar sesión"
+        #Cambiamos el widget de button a ImageButton
+        ImageButton: 
             on_press: root.logout()
+            source: "resources/logout_hover.png" if self.hovered else "resources/logout_nothover.png"
         Label:
             text: "¿Cómo te sientes hoy, " + root.user + "?"
         TextInput:
