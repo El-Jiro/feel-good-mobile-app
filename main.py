@@ -260,7 +260,7 @@ class MainApp(App):
         return self.sm
 
 #Creamos una clase especial llamada ImageButton para el botón de Logout, la cual heredará de HoverBehavior, Image y ButtonBehavior 
-class ImageButton(Image, HoverBehavior, ButtonBehavior):
+class ImageButton(ButtonBehavior, HoverBehavior, Image):
     pass
 
 #Si estamos ejecutando el código desde este mismo archivo y no como import en otro script, creamos una instancia anónima de MainApp
