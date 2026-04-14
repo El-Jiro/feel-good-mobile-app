@@ -153,9 +153,10 @@ class MainScreen(Screen):
         #desplazamiento hacia la derecha
         self.manager.transition.direction = "right"
         self.manager.current = "login_screen"
-
+    
     #Creamos un método para obtener la emoción introducida por el usuario y mostrar una cita acorde:
     def get_quote(self: Self, feel: str):
+        self.ids.quote.color = "white"
         #Ponemos todo el input en mínusculas para que no haya problemas al compararlo con los nombres de los archivos
         feel = feel.lower()
         #Obtenemos las rutas de todos los archivos que se encuentren dentro de la carpeta quotes
