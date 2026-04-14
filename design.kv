@@ -195,13 +195,20 @@
                 opacity: 1 if self.state == "normal" else 0.5
                 size_hint: 0.7, 0.5
                 pos_hint: {'center_x': 0.5, 'center_y': 0.6}
-        #Mostraremos una cita correspondiente al estado de ánimo del usuario en el label de abajo al presionar el botón
-        Label:
-            id: quote
-            text: ""
-            text_size: self.width, None
-            valign: "middle"
-            halign: "center"
+        #Metemos el label dentro de un scrollview
+        ScrollView:
+            #Mostraremos una cita correspondiente al estado de ánimo del usuario en el label de abajo al presionar el botón
+            Label:
+                id: quote
+                text: ""
+                text_size: self.width, None
+                valign: "middle"
+                halign: "center"
+                size_hint_y: None
+                #utilizamos self.texture_size para cambiar la altura del label dinámicamente según el texto, self se refiere
+                #al widget, mientras que texture_size es una tupla que contiene dos elementos: el ancho y el alto del texto renderizado,
+                #en este caso accedemos a la altura con el índice 1.
+                height: self.texture_size[1]
 
 
 <ForgotPasswordScreen>:
