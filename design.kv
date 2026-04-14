@@ -179,20 +179,22 @@
                 size_hint: 0.35, 0.35
                 pos_hint: {'center_x': 0.9, 'center_y': 0.8}
                 padding: 10, 0
-        Label:
-            text: "¿Cómo te sientes hoy, " + root.user + "?"
-        TextInput:
-            id: feeling
-            hint_text: "Intenta con: feliz, triste, no amado, etc."
-            size_hint_y: None
-            height: "50dp"
+        RelativeLayout:
+            Label:
+                pos_hint: {'center_x': 0.5, 'center_y': 1.0}
+                text: "¿Cómo te sientes hoy, " + root.user + "?"
+            TextInput:
+                id: feeling
+                hint_text: "Intenta con: feliz, triste, no amado, etc."
+                size_hint_y: None
+                height: "50dp"
         RelativeLayout:
             Button:
                 text: "Ilumíname"
                 on_press: root.get_quote(feeling.text)
                 opacity: 1 if self.state == "normal" else 0.5
-                size_hint: 0.7, 0.4
-                pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+                size_hint: 0.7, 0.5
+                pos_hint: {'center_x': 0.5, 'center_y': 0.6}
         #Mostraremos una cita correspondiente al estado de ánimo del usuario en el label de abajo al presionar el botón
         Label:
             id: quote
