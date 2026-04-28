@@ -159,14 +159,18 @@ class MainScreen(Screen):
         self.ids.quote.color = "white"
         #Ponemos todo el input en mínusculas para que no haya problemas al compararlo con los nombres de los archivos
         feel = feel.lower()
+        if feel == "no amado":
+            feel = "no_amado"
+            
         #Obtenemos las rutas de todos los archivos que se encuentren dentro de la carpeta quotes
-        avlb_feelings: list[str] = glob.glob("quotes/*")
+        feelings: list[str] = glob.glob("quotes/*")
         #Ahora obtenemos sólo los nombres de archivo en sí sin todas las carpetas ni la extensión 
         #mediante Path().stem y la comprensión de listas
-        avlb_feelings = [Path(file).stem for file in avlb_feelings]
+        feelings = [Path(file).stem for file in feelings]
+
 
         #Si la emoción introducida está en la lista de las emociones disponibles, abrimos su archivo .txt correspondiente:
-        if feel in avlb_feelings:
+        if feel in feelings:
             with open(f"quotes/{feel}.txt", encoding="utf8") as file:
                 #obtenemos las citas con readlines()
                 quotes: list[str] = file.readlines()
