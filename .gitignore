@@ -3,3 +3,4 @@ session.json
 kivy-buildozer-installer.sh
 buildozer.spec
 .buildozer/
+get-pip.py
