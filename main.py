@@ -6,7 +6,7 @@ from kivy.uix.label import Label
 from kivy.clock import Clock
 from kivy.properties import StringProperty
 from kivy.storage.jsonstore import JsonStore
-from typing import Self
+from typing_extensions import Self
 from datetime import datetime
 from pathlib import Path
 from hoverable import HoverBehavior
